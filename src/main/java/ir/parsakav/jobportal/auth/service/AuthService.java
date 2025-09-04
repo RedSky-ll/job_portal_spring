@@ -46,8 +46,8 @@ private final UserProfileRepository profileRepository;
                 .email(req.getEmail())
                 .password(encoder.encode(req.getPassword()))
                 .role(role)
-                .enabled(true)         // در نسخهٔ مینیمال: فعال
-                .emailVerified(true)   // در نسخهٔ مینیمال: تأیید شده
+                .enabled(false)         // در نسخهٔ مینیمال: فعال
+                .emailVerified(false)   // در نسخهٔ مینیمال: تأیید شده
                 .build();
         users.save(u);
         if(req.getRole().equals("SEEKER")) {
@@ -59,7 +59,7 @@ private final UserProfileRepository profileRepository;
         }
         // TODO: send verify email (اختیاری)
         String token = jwt.generateToken(u.getEmail(), u.getRole().name());
-     // sendVerifyEmail(u,token);
+      sendVerifyEmail(u,token);
         return new TokenResponse(token);
     }
 
